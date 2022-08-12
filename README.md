@@ -31,14 +31,11 @@ This plugin also provides a native life cycle listener through `instance.appLife
 
 ## IOS
 
-<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_0.gif?raw=true" height="400" />
-<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_1.png?raw=true" height="400" />
-<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_2.png?raw=true" height="400" />
+<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_0.gif?raw=true" height="400" /><img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_1.png?raw=true" height="400" /><img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/ios_2.png?raw=true" height="400" />
 
 ## Android
 
-<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/android_1.png?raw=true" height="400" />
-<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/android_2.png?raw=true" height="400" />
+<img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/android_1.png?raw=true" height="400" /><img src="https://github.com/eddyuan/privacy_screen/blob/master/screen_shots/android_2.png?raw=true" height="400" />
 
 ## Usage
 

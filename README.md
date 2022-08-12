@@ -46,7 +46,7 @@ Add `privacy_screen` as a dependency in your `pubspec.yaml` file ([what?](https:
 ### Import
 
 ```
-import 'package:secure_application/secure_application.dart';
+import 'package:privacy_screen/privacy_screen.dart';
 ```
 
 And then you can simply call functions of PrivacyScreen class instance anywhere

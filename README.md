@@ -80,7 +80,7 @@ bool result = await PrivacyScreen.instance.disable();
 
 Supply `privacyImageName` in iosOptions
 
-Open your project's ios folder with xCode and add the image asset in the runner/assets
+Open your project's ios folder with XCode and add the image asset in the runner/assets
 
 The `privacyImageName` String must match the asset name, eg: `"LaunchImage"`
 
@@ -100,6 +100,22 @@ PrivacyScreen.instance.lock();
 
 ```dart
 PrivacyScreen.instance.unlock();
+```
+
+### To pause auto lock
+
+This will pause the auto lock until resume.
+
+It's is usefull when you set lockTrigger as `IosLockTrigger.willResignActive` because actions like swipe down to show system menu and authenticate with faceID will also trigger the `willResignActive` action (you don't want to lock it right after faceID unlock.. maybe? so you can pause before faceID and resume after faceID done)
+
+```dart
+PrivacyScreen.instance.pauseLock();
+```
+
+### To resume auto lock
+
+```dart
+PrivacyScreen.instance.resumeLock();
 ```
 
 ### Example (Because you all want to see in Readme)

@@ -1,12 +1,15 @@
+library privacy_screen;
+
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/rxdart.dart' show BehaviorSubject;
 import 'privacy_screen_platform_interface.dart';
 import 'privacy_screen_state.dart';
-import 'privacy_helpers.dart';
-export 'privacy_helpers.dart';
+import 'src/privacy_helpers.dart';
+export 'src/privacy_helpers.dart';
+export 'src/privacy_gate.dart';
 
 class PrivacyScreen extends ValueNotifier<PrivacyScreenState> {
   static final PrivacyScreen _instance = PrivacyScreen._init();
@@ -145,7 +148,35 @@ class PrivacyScreen extends ValueNotifier<PrivacyScreenState> {
   }
 
   _updateLifeCycleStatus(dynamic value) {
-    _appLifeCycleEventsCtrl.add(toAppLifeCycle(value));
+    _appLifeCycleEventsCtrl.add(_toAppLifeCycle(value));
+  }
+
+  AppLifeCycle _toAppLifeCycle(dynamic value) {
+    if (value is String) {
+      switch (value) {
+        case "applicationDidBecomeActive":
+          return AppLifeCycle.iosDidBecomeActive;
+        case "applicationDidEnterBackground":
+          return AppLifeCycle.iosDidEnterBackground;
+        case "applicationWillEnterForeground":
+          return AppLifeCycle.iosWillEnterForeground;
+        case "applicationWillResignActive":
+          return AppLifeCycle.iosWillResignActive;
+        case "onResume":
+          return AppLifeCycle.androidOnResume;
+        case "onDestroy":
+          return AppLifeCycle.androidOnDestroy;
+        case "onPause":
+          return AppLifeCycle.androidOnPause;
+        case "onStop":
+          return AppLifeCycle.androidOnStop;
+        case "onStart":
+          return AppLifeCycle.androidOnStart;
+        case "onCreate":
+          return AppLifeCycle.androidOnCreate;
+      }
+    }
+    return AppLifeCycle.unknown;
   }
 
   @override

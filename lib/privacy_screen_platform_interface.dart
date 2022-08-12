@@ -1,8 +1,7 @@
-import 'dart:ui';
+import 'dart:ui' show Color;
 
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:privacy_screen/privacy_helpers.dart';
-
+import 'src/privacy_helpers.dart';
 import 'privacy_screen_method_channel.dart';
 
 abstract class PrivacyScreenPlatform extends PlatformInterface {

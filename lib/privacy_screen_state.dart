@@ -1,7 +1,7 @@
-import 'dart:ui';
+import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
-import 'privacy_helpers.dart';
+import 'src/privacy_helpers.dart';
 
 /// state hold by the [SecureApplicationController]
 @immutable

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:privacy_screen/privacy_screen.dart';
+import '../privacy_screen.dart';
 
 class PrivacyGate extends StatefulWidget {
   const PrivacyGate({

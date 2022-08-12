@@ -1,9 +1,8 @@
-import 'dart:ui';
+import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:privacy_screen/privacy_helpers.dart';
-
+import '/src/privacy_helpers.dart';
 import 'privacy_screen_platform_interface.dart';
 
 /// An implementation of [PrivacyScreenPlatform] that uses method channels.

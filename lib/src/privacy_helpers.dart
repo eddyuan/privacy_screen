@@ -47,34 +47,6 @@ enum AppLifeCycle {
   unknown,
 }
 
-AppLifeCycle toAppLifeCycle(dynamic value) {
-  if (value is String) {
-    switch (value) {
-      case "applicationDidBecomeActive":
-        return AppLifeCycle.iosDidBecomeActive;
-      case "applicationDidEnterBackground":
-        return AppLifeCycle.iosDidEnterBackground;
-      case "applicationWillEnterForeground":
-        return AppLifeCycle.iosWillEnterForeground;
-      case "applicationWillResignActive":
-        return AppLifeCycle.iosWillResignActive;
-      case "onResume":
-        return AppLifeCycle.androidOnResume;
-      case "onDestroy":
-        return AppLifeCycle.androidOnDestroy;
-      case "onPause":
-        return AppLifeCycle.androidOnPause;
-      case "onStop":
-        return AppLifeCycle.androidOnStop;
-      case "onStart":
-        return AppLifeCycle.androidOnStart;
-      case "onCreate":
-        return AppLifeCycle.androidOnCreate;
-    }
-  }
-  return AppLifeCycle.unknown;
-}
-
 class PrivacyAndroidOptions {
   const PrivacyAndroidOptions({
     this.enableSecure = true,

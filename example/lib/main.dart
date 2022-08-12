@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:privacy_screen/privacy_gate.dart';
 import 'package:privacy_screen/privacy_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -77,23 +77,23 @@ AppLifeCycle toAppLifeCycle(dynamic value) {
 
 class PrivacyAndroidOptions {
   const PrivacyAndroidOptions({
-    /// This will add [FLAG_SECURE] for android
-    /// Which will hide app content in background
-    /// and also disable screenshot for the whole app
     this.enableSecure = true,
-
-    /// Enable auto lock, this is irrelevant with [enableSecure]
-    /// You can disable [enableSecure] and still enable auto locker
-    /// Disabled when <0, enable when >= 0, delay in seconds
-    /// It uses native app lifecycle to trigger instead of
-    /// flutter's lifecycle, because flutter lifecycle is not accurate
-    /// when going into a natice viewController (eg: webview, pdfview, etc)
-    /// The lockscreen only happens after onResume, android does not render
-    /// in background
     this.autoLockAfterSeconds = -1,
   });
 
+  /// This will add [FLAG_SECURE] for android
+  /// Which will hide app content in background
+  /// and also disable screenshot for the whole app
   final bool enableSecure;
+
+  /// Enable auto lock, this is irrelevant with [enableSecure]
+  /// You can disable [enableSecure] and still enable auto locker
+  /// Disabled when <0, enable when >= 0, delay in seconds
+  /// It uses native app lifecycle to trigger instead of
+  /// flutter's lifecycle, because flutter lifecycle is not accurate
+  /// when going into a natice viewController (eg: webview, pdfview, etc)
+  /// The lockscreen only happens after onResume, android does not render
+  /// in background
   final int autoLockAfterSeconds;
 
   factory PrivacyAndroidOptions.disable() => const PrivacyAndroidOptions(
@@ -131,7 +131,8 @@ class PrivacyIosOptions {
   final String? privacyImageName;
 
   /// You can choose between
-  /// [IosLockTrigger.willResignActive] -> app entered app switcher
+  /// [IosLockTrigger.willResignActive] -> app entered app switcher (Be very careful if you want to use this approch)
+  /// SwipeDown, SwipeUp (open system drawer), faceId etc will also trigger [willResignActive]
   /// - OR -
   /// [IosLockTrigger.didEnterBackground] -> app entered background (when switched to another app or home)
   final IosLockTrigger lockTrigger;

@@ -108,7 +108,10 @@ class _PrivacyGateState extends State<PrivacyGate>
             child: _blurBuilder(
               child: Opacity(
                 opacity: _lockVisibilityCtrl.value,
-                child: widget.lockBuilder?.call(context),
+                child: Container(
+                  color: _backgroundColor,
+                  child: widget.lockBuilder?.call(context),
+                ),
               ),
             ),
           ),

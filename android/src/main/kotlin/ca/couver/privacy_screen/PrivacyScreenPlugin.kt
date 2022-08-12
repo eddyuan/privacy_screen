@@ -16,7 +16,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
 
 /** PrivacyScreenPlugin */
-class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler,  ActivityAware,
+class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     DefaultLifecycleObserver {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
@@ -24,11 +24,11 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler,  ActivityAware,
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    private lateinit var activity:Activity
+    private lateinit var activity: Activity
     private lateinit var context: Context
 
-//    private var enableSecure: Boolean = false
-    private var autoLockAfterSeconds: Long = -1
+    //    private var enableSecure: Boolean = false
+    private var autoLockAfterSeconds: Number = -1
     private var timeEnteredBackground: Long = 0
 
 
@@ -58,7 +58,7 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler,  ActivityAware,
                 } else {
                     activity.window?.clearFlags(LayoutParams.FLAG_SECURE)
                 }
-                autoLockAfterSeconds = call.argument("autoLockAfterSecondsAndroid") ?: -1
+                autoLockAfterSeconds = call.argument<Number>("autoLockAfterSecondsAndroid") ?: -1
                 result.success(true)
             }
             else -> {
@@ -78,7 +78,7 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler,  ActivityAware,
     // DefaultLifecycleObserver
 
     private fun judgeLock() {
-        if (autoLockAfterSeconds >= 0 && timeEnteredBackground > 0 && (System.currentTimeMillis() - timeEnteredBackground) / 1000 > autoLockAfterSeconds) {
+        if (autoLockAfterSeconds.toLong() >= 0 && timeEnteredBackground > 0 && (System.currentTimeMillis() - timeEnteredBackground) / 1000 > autoLockAfterSeconds.toLong()) {
             channel.invokeMethod("lock", null)
         }
         timeEnteredBackground = 0

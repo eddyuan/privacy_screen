@@ -16,7 +16,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   url_launcher: ^6.1.5
-  intercom_flutter: ^7.3.0
   flutter:
     sdk: flutter
 

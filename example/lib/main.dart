@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 import 'dart:async';
 
 import 'package:privacy_screen/privacy_gate.dart';
@@ -7,15 +6,6 @@ import 'package:privacy_screen/privacy_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // initialize the Intercom.
-  // make sure to add keys from your Intercom workspace.
-  await Intercom.instance.initialize(
-    't0ee6c01',
-    iosApiKey: 'ios_sdk-dd5922ffff4faad3682c1dd8931d4b473615332f',
-    androidApiKey: 'android_sdk-324cdf713806c0c3f97accc6bc60b420010714a0',
-  );
-  Intercom.instance.loginUnidentifiedUser();
   runApp(const MyApp());
 }
 
@@ -27,9 +17,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<String> lifeCycleHistory = [];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+    PrivacyScreen.instance.appLifeCycleEvents.listen((event) {
+      lifeCycleHistory.add('$event');
+      setState(() {});
+    });
     initPlatformState();
   }
 
@@ -47,109 +48,110 @@ class _MyAppState extends State<MyApp> {
           body: SingleChildScrollView(
             child: SizedBox(
               width: double.infinity,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      launchUrl(Uri.parse(
-                          "https://www.instagram.com/couverfinancial/"));
-                    },
-                    child: Text("Url Launch"),
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () =>
+                            launchUrl(Uri.parse("https://www.flutter.dev/")),
+                        child: const Text("Test Native: Url Launch"),
+                      ),
+                      const Divider(),
+                      ElevatedButton(
+                        onPressed: () async {
+                          bool result = await PrivacyScreen.instance.enable(
+                            iosOptions: const PrivacyIosOptions(
+                              enablePrivacy: true,
+                              privacyImageName: "LaunchImage",
+                              autoLockAfterSeconds: 5,
+                              lockTrigger: IosLockTrigger.didEnterBackground,
+                            ),
+                            androidOptions: const PrivacyAndroidOptions(
+                              enableSecure: true,
+                              autoLockAfterSeconds: 5,
+                            ),
+                            backgroundColor: Colors.white.withOpacity(0),
+                            blurEffect: PrivacyBlurEffect.extraLight,
+                          );
+                        },
+                        child: const Text("Enable extraLight"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          bool result = await PrivacyScreen.instance.enable(
+                            iosOptions: const PrivacyIosOptions(
+                              enablePrivacy: true,
+                              privacyImageName: "LaunchImage",
+                              autoLockAfterSeconds: 5,
+                              lockTrigger: IosLockTrigger.didEnterBackground,
+                            ),
+                            androidOptions: const PrivacyAndroidOptions(
+                              enableSecure: true,
+                              autoLockAfterSeconds: 5,
+                            ),
+                            backgroundColor: Colors.white.withOpacity(0),
+                            blurEffect: PrivacyBlurEffect.light,
+                          );
+                        },
+                        child: const Text("Enable light"),
+                      ),
+
+                      ElevatedButton(
+                        onPressed: () async {
+                          bool result = await PrivacyScreen.instance.enable(
+                            iosOptions: const PrivacyIosOptions(
+                              enablePrivacy: true,
+                              privacyImageName: "LaunchImage",
+                              autoLockAfterSeconds: 5,
+                              lockTrigger: IosLockTrigger.didEnterBackground,
+                            ),
+                            androidOptions: const PrivacyAndroidOptions(
+                              enableSecure: true,
+                              autoLockAfterSeconds: 5,
+                            ),
+                            backgroundColor: Colors.red.withOpacity(0.4),
+                            blurEffect: PrivacyBlurEffect.dark,
+                          );
+                        },
+                        child: const Text("Enable dark"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          PrivacyScreen.instance.disable();
+                        },
+                        child: const Text("Disable"),
+                      ),
+                      const Divider(),
+                      ElevatedButton(
+                        onPressed: () async {
+                          PrivacyScreen.instance.lock();
+                        },
+                        child: const Text("Lock"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          PrivacyScreen.instance.pauseLock();
+                        },
+                        child: const Text("Pause Auto Lock"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          PrivacyScreen.instance.pauseLock();
+                        },
+                        child: const Text("Resume Auto Lock"),
+                      ),
+                      const Divider(),
+                      ...lifeCycleHistory.map((e) => Text(e)).toList(),
+                      // StreamBuilder(
+                      //   stream: PrivacyScreen.instance.appLifeCycleEvents,
+                      //   builder: (context, snapshot) =>
+                      //       Text('Last LifeCycle: ${snapshot.data}'),
+                      // ),
+                    ],
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await Intercom.instance.displayHelpCenter();
-                    },
-                    child: Text("Goto Intercom"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await Intercom.instance.displayHelpCenter();
-                    },
-                    child: Text("Goto Intercom"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.enable(
-                        iosOptions: const PrivacyIosOptions(
-                          enablePrivacy: true,
-                          privacyImageName: "LaunchImage",
-                          autoLockAfterSeconds: 5,
-                          lockTrigger: IosLockTrigger.didEnterBackground,
-                        ),
-                        androidOptions: const PrivacyAndroidOptions(
-                          enableSecure: true,
-                          autoLockAfterSeconds: 5,
-                        ),
-                        backgroundColor: Colors.white.withOpacity(0),
-                        blurEffect: PrivacyBlurEffect.light,
-                      );
-                    },
-                    child: const Text("Enable light"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.enable(
-                        iosOptions: const PrivacyIosOptions(
-                          enablePrivacy: true,
-                          privacyImageName: "LaunchImage",
-                          autoLockAfterSeconds: 5,
-                          lockTrigger: IosLockTrigger.didEnterBackground,
-                        ),
-                        androidOptions: const PrivacyAndroidOptions(
-                          enableSecure: true,
-                          autoLockAfterSeconds: 5,
-                        ),
-                        backgroundColor: Colors.white.withOpacity(0),
-                        blurEffect: PrivacyBlurEffect.extraLight,
-                      );
-                    },
-                    child: const Text("Enable extraLight"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.enable(
-                        iosOptions: const PrivacyIosOptions(
-                          enablePrivacy: true,
-                          privacyImageName: "LaunchImage",
-                          autoLockAfterSeconds: 5,
-                          lockTrigger: IosLockTrigger.didEnterBackground,
-                        ),
-                        androidOptions: const PrivacyAndroidOptions(
-                          enableSecure: true,
-                          autoLockAfterSeconds: 5,
-                        ),
-                        backgroundColor: Colors.white.withOpacity(0),
-                        blurEffect: PrivacyBlurEffect.dark,
-                      );
-                    },
-                    child: const Text("Enable dark"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.disable();
-                    },
-                    child: const Text("Disable"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.lock();
-                    },
-                    child: const Text("Lock"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.pauseLock();
-                    },
-                    child: const Text("Pause Auto Lock"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      PrivacyScreen.instance.pauseLock();
-                    },
-                    child: const Text("Resume Auto Lock"),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

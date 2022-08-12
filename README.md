@@ -272,7 +272,7 @@ When you call `enable()`, you can provide configurations, here's what they do
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | enablePrivacy        | Enable the privacy view when app goes into background                                                                                                     |
 | autoLockAfterSeconds | Trigger lock when coming back (x) seconds after enter background. This is seperated from enablePriacy, so you can disable privacy and still use auto lock |
-| privacyImageName     | The name of the native IOS runner asset you want to show on the privacy view                                                                              |
+| privacyImageName     | The name of the native IOS runner asset you want to show on the privacy view. Leave empty if you don't want to show an image                              |
 | lockTrigger          | What native event should trigger the lock mechanism. Try avoid using IosLockTrigger.willResignActive                                                      |
 
 ### Android options

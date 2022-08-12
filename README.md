@@ -1,6 +1,10 @@
 # privacy_screen
 
-A new Flutter plugin project.
+Flutter plugin to provide a privacy screen feature (hide content when app is in background)
+
+Pluggin in iOS is in swift
+
+Pluggin in Android is in Kotlin / AndroidX libraries
 
 ## Getting Started
 
@@ -12,4 +16,3 @@ Android and/or iOS.
 For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-

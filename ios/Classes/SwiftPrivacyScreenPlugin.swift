@@ -1,15 +1,6 @@
 import Flutter
 import UIKit
 
-class NativeViewState {
-    var hash:String
-    var isHidden:Bool
-    init(hash:String, isHidden:Bool) {
-        self.hash = hash;
-        self.isHidden = isHidden;
-    }
-}
-
 public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     
     var enablePrivacy = false
@@ -26,6 +17,7 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     var autoLockAfterSeconds: Double = -1
     var blurEffect: UIBlurEffect.Style?
     var isInForeground: Bool = true
+    var lockedDismissDelay: CFTimeInterval = 0.2
     
     
     internal let registrar: FlutterPluginRegistrar
@@ -114,14 +106,13 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
         let nowTime = NSDate().timeIntervalSince1970
         if(autoLockAfterSeconds >= 0 && timeEnteredBackground > 0 && (nowTime - timeEnteredBackground) > autoLockAfterSeconds) {
             methodChannel.invokeMethod("lock", arguments: nil)
-            timeEnteredBackground = 0
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + lockedDismissDelay) {
                 self.dismissPrivacyView()
             }
         } else {
-            timeEnteredBackground = 0
             dismissPrivacyView()
         }
+        timeEnteredBackground = 0
         
     }
     

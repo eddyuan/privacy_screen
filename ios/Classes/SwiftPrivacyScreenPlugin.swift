@@ -25,6 +25,7 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     var timeEnteredBackground: Double = 0
     var autoLockAfterSeconds: Double = -1
     var blurEffect: UIBlurEffect.Style?
+    var isInForeground: Bool = true
     
     
     internal let registrar: FlutterPluginRegistrar
@@ -89,21 +90,22 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     }
     
     private func dismissPrivacyView() {
-        guard privacyUIView != nil else {
-            return
-        }
-        
-        privacyUIView?.layer.removeAllAnimations()
-        UIView.transition(with: privacyUIView!,
-                          duration: animationDuration,
-                          options: .transitionCrossDissolve,
-                          animations:  {
-            self.privacyUIView?.alpha = 0.0
-        }) { (finished) in
-            if finished && self.privacyUIView != nil && self.isInFadeIn {
-                for subview in self.privacyUIView!.subviews { subview.removeFromSuperview() }
-                self.privacyUIView?.removeFromSuperview()
-                self.privacyUIView = nil
+        if(isInForeground) {
+            guard privacyUIView != nil else {
+                return
+            }
+            privacyUIView?.layer.removeAllAnimations()
+            UIView.transition(with: privacyUIView!,
+                              duration: animationDuration,
+                              options: .transitionCrossDissolve,
+                              animations:  {
+                self.privacyUIView?.alpha = 0.0
+            }) { (finished) in
+                if finished && self.privacyUIView != nil && self.isInFadeIn {
+                    for subview in self.privacyUIView!.subviews { subview.removeFromSuperview() }
+                    self.privacyUIView?.removeFromSuperview()
+                    self.privacyUIView = nil
+                }
             }
         }
     }
@@ -112,16 +114,22 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
         let nowTime = NSDate().timeIntervalSince1970
         if(autoLockAfterSeconds >= 0 && timeEnteredBackground > 0 && (nowTime - timeEnteredBackground) > autoLockAfterSeconds) {
             methodChannel.invokeMethod("lock", arguments: nil)
+            timeEnteredBackground = 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.dismissPrivacyView()
+            }
+        } else {
+            timeEnteredBackground = 0
+            dismissPrivacyView()
         }
-        timeEnteredBackground = 0
         
     }
     
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
         methodChannel.invokeMethod("onLifeCycle", arguments: "applicationDidBecomeActive")
+        isInForeground = true
         judgeLock()
-        dismissPrivacyView()
     }
     
     public func applicationDidEnterBackground(_ application: UIApplication) {
@@ -136,6 +144,7 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     }
     
     public func applicationWillResignActive(_ application: UIApplication) {
+        isInForeground = false
         if(!lockWithDidEnterBackground) {
             timeEnteredBackground = NSDate().timeIntervalSince1970
         }

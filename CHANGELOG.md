@@ -1,4 +1,8 @@
-## 0.0.3 - Aug 15, 2022
+## 0.0.4 - Aug 16, 2022
+
+- Small bug fix (setState())
+
+## 0.0.3 - Aug 16, 2022
 
 - Added navigator method
 

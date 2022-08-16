@@ -121,17 +121,19 @@ class _PrivacyGateState extends State<PrivacyGate>
   void _doLock() {
     if (widget.lockBuilder != null) {
       if (widget.navigatorKey?.currentState != null) {
+        print("_toLockPage");
         _toLockPage();
       } else {
         if (_lockVisibilityCtrl.value != 1) {
           _lockVisibilityCtrl.value = 1;
+          setState(() {});
         }
       }
     }
     widget.onLock?.call();
   }
 
-  void _doUnlock() {
+  void _doUnlock() async {
     if (widget.navigatorKey != null && (_lockerRoute?.isActive ?? false)) {
       if (_lockerRoute!.isCurrent) {
         widget.navigatorKey!.currentState?.pop();
@@ -140,7 +142,8 @@ class _PrivacyGateState extends State<PrivacyGate>
       }
     }
     if (_lockVisibilityCtrl.value > 0) {
-      _lockVisibilityCtrl.animateBack(0).orCancel;
+      await _lockVisibilityCtrl.animateBack(0).orCancel;
+      setState(() {});
     }
     widget.onUnlock?.call();
   }
@@ -154,6 +157,7 @@ class _PrivacyGateState extends State<PrivacyGate>
       children: [
         widget.child ?? const SizedBox.shrink(),
         // Use Overlay, otherwise input focus can not work
+
         if (_lockVisibilityCtrl.value > 0)
           Overlay(
             initialEntries: [

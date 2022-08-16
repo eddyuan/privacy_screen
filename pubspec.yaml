@@ -1,6 +1,6 @@
 name: privacy_screen
 description: A plugin for hiding application in app switcher and more
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/eddyuan/privacy_screen.git
 
 environment:

@@ -1,3 +1,7 @@
+## 0.0.5 - Aug 16, 2022
+
+- Fixed some issue with native (FaceID) caused unable to dismiss
+
 ## 0.0.4 - Aug 16, 2022
 
 - Small bug fix (setState())

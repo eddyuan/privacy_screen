@@ -16,7 +16,6 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     var timeEnteredBackground: Double = 0
     var autoLockAfterSeconds: Double = -1
     var blurEffect: UIBlurEffect.Style?
-    var isInForeground: Bool = true
     var lockedDismissDelay: CFTimeInterval = 0.2
     
     
@@ -82,7 +81,6 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     }
     
     private func dismissPrivacyView() {
-        if(isInForeground) {
             guard privacyUIView != nil else {
                 return
             }
@@ -99,7 +97,6 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
                     self.privacyUIView = nil
                 }
             }
-        }
     }
     
     private func judgeLock() {
@@ -119,7 +116,6 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     
     public func applicationDidBecomeActive(_ application: UIApplication) {
         methodChannel.invokeMethod("onLifeCycle", arguments: "applicationDidBecomeActive")
-        isInForeground = true
         judgeLock()
     }
     
@@ -135,7 +131,6 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     }
     
     public func applicationWillResignActive(_ application: UIApplication) {
-        isInForeground = false
         if(!lockWithDidEnterBackground) {
             timeEnteredBackground = NSDate().timeIntervalSince1970
         }

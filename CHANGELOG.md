@@ -1,3 +1,7 @@
+## 0.0.3 - Aug 15, 2022
+
+- Added navigator method
+
 ## 0.0.2 - Aug 15, 2022
 
 - Added native delay for dismiss privacy view after lock (So flutter lock widget can load before paivacy dismiss)

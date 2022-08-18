@@ -198,23 +198,27 @@ class LockerPage extends StatelessWidget {
 }
 ```
 
-### Opetion 2
+### Option 2
 
 Without providing `navigatorKey`, the plugin will put your lock in `Stack` with your app. This method can not handle hardware back button thus even the lock is showing, user can still navigate away by pressing the hardware back button on android.
 
-### To lock
+### Option 3
+
+Without providing `lockBuilder`, you can use `onLock` and `onUnlock` event trigger to write you own lock mechanisms, just make sure you use `instance.unlock` to reset the locker properly.
+
+### Manual Lock
 
 ```dart
 PrivacyScreen.instance.lock();
 ```
 
-### To unlock
+### Unlock
 
 ```dart
 PrivacyScreen.instance.unlock();
 ```
 
-### To pause auto lock
+### Pause auto lock
 
 This will pause the auto lock until resume.
 
@@ -224,7 +228,7 @@ It's is usefull when you set lockTrigger as `IosLockTrigger.willResignActive` be
 PrivacyScreen.instance.pauseLock();
 ```
 
-### To resume auto lock
+### Resume auto lock
 
 ```dart
 PrivacyScreen.instance.resumeLock();
@@ -232,7 +236,7 @@ PrivacyScreen.instance.resumeLock();
 
 ## Parameters
 
-When you call `enable()`, you can provide configurations, here's what they do
+When calling `instance.enable()`, configurations can be provided:
 
 ### Shared options
 
@@ -333,7 +337,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   const Divider(),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -352,7 +356,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -371,7 +375,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -390,25 +394,25 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      PrivacyScreen.instance.disable();
+                      await PrivacyScreen.instance.disable();
                     },
                     child: const Text("Disable"),
                   ),
                   const Divider(),
                   ElevatedButton(
-                    onPressed: () async {
-                      await PrivacyScreen.instance.lock();
+                    onPressed: () {
+                      PrivacyScreen.instance.lock();
                     },
                     child: const Text("Lock"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       PrivacyScreen.instance.pauseLock();
                     },
                     child: const Text("Pause Auto Lock"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       PrivacyScreen.instance.pauseLock();
                     },
                     child: const Text("Resume Auto Lock"),

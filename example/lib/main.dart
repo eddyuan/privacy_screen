@@ -71,7 +71,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   const Divider(),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -90,7 +90,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -109,7 +109,7 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      bool result = await PrivacyScreen.instance.enable(
+                      await PrivacyScreen.instance.enable(
                         iosOptions: const PrivacyIosOptions(
                           enablePrivacy: true,
                           privacyImageName: "LaunchImage",
@@ -128,25 +128,25 @@ class _FirstRouteState extends State<FirstRoute> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      PrivacyScreen.instance.disable();
+                      await PrivacyScreen.instance.disable();
                     },
                     child: const Text("Disable"),
                   ),
                   const Divider(),
                   ElevatedButton(
-                    onPressed: () async {
-                      await PrivacyScreen.instance.lock();
+                    onPressed: () {
+                      PrivacyScreen.instance.lock();
                     },
                     child: const Text("Lock"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       PrivacyScreen.instance.pauseLock();
                     },
                     child: const Text("Pause Auto Lock"),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       PrivacyScreen.instance.pauseLock();
                     },
                     child: const Text("Resume Auto Lock"),

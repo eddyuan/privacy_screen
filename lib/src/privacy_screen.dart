@@ -48,11 +48,11 @@ class PrivacyScreen {
   bool _lockPaused = false;
   bool get lockPaused => _lockPaused;
 
-  pauseLock() {
+  void pauseLock() {
     _lockPaused = true;
   }
 
-  resumeLock() {
+  void resumeLock() {
     _lockPaused = false;
   }
 
@@ -131,19 +131,19 @@ class PrivacyScreen {
     return result ?? false;
   }
 
-  lock() {
+  void lock() {
     if (!instance.lockNotifier.value) {
       instance.lockNotifier.value = true;
     }
   }
 
-  unlock() {
+  void unlock() {
     if (instance.lockNotifier.value) {
       instance.lockNotifier.value = false;
     }
   }
 
-  _updateLifeCycleStatus(dynamic value) {
+  void _updateLifeCycleStatus(dynamic value) {
     instance.lifeCycleNotifier.value = _toAppLifeCycle(value);
   }
 

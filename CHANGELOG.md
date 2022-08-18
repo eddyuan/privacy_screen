@@ -1,3 +1,7 @@
+## 0.0.6 - Aug 17, 2022
+
+- Update some documentation and method types (minor changes)
+
 ## 0.0.5 - Aug 16, 2022
 
 - Fixed some issue with native (FaceID) caused unable to dismiss

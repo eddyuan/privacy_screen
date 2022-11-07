@@ -14,7 +14,7 @@ This plugin also provides a native life cycle listener through `instance.appLife
 
 | IOS                | Android                | Feature                                 |
 | ------------------ | ---------------------- | --------------------------------------- |
-| :heavy_check_mark: | :x:                    | Custom privacy screen image             |
+| :heavy_check_mark: | :x:                    | Custom privacy screen image / Blurr Effect             |
 | :x:                | Mandatory when enabled | Disable screenshot                      |
 | :heavy_check_mark: | :heavy_check_mark:     | Auto lock trigger with native lifecycle |
 | :heavy_check_mark: | :heavy_check_mark:     | Native lifecycle listener               |

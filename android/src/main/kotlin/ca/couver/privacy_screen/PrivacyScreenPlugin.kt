@@ -1,6 +1,5 @@
 package ca.couver.privacy_screen
 
-
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager.LayoutParams
@@ -13,50 +12,32 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry
 
 /** PrivacyScreenPlugin */
-class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
-    DefaultLifecycleObserver {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
+class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, DefaultLifecycleObserver {
+
     private lateinit var channel: MethodChannel
-
-    private lateinit var activity: Activity
+    private var activity: Activity? = null
     private lateinit var context: Context
-
-    //    private var enableSecure: Boolean = false
     private var autoLockAfterSeconds: Number = -1
     private var timeEnteredBackground: Long = 0
 
-
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel =
-            MethodChannel(flutterPluginBinding.binaryMessenger, "channel.couver.privacy_screen")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "channel.couver.privacy_screen")
         channel.setMethodCallHandler(this)
         this.context = flutterPluginBinding.applicationContext
-        ProcessLifecycleOwner
-            .get()
-            .lifecycle.addObserver(this)
-    }
-
-    companion object {
-        @JvmStatic
-        fun registerWith(registrar: PluginRegistry.Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "channel.couver.privacy_screen")
-            channel.setMethodCallHandler(PrivacyScreenPlugin())
-        }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "updateConfig" -> {
-                if (call.argument<Boolean>("enableSecureAndroid") == true) {
-                    activity.window?.addFlags(LayoutParams.FLAG_SECURE)
-                } else {
-                    activity.window?.clearFlags(LayoutParams.FLAG_SECURE)
+                activity?.window?.let { window ->
+                    if (call.argument<Boolean>("enableSecureAndroid") == true) {
+                        window.addFlags(LayoutParams.FLAG_SECURE)
+                    } else {
+                        window.clearFlags(LayoutParams.FLAG_SECURE)
+                    }
                 }
                 autoLockAfterSeconds = call.argument<Number>("autoLockAfterSecondsAndroid") ?: -1
                 result.success(true)
@@ -69,50 +50,50 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
-        ProcessLifecycleOwner
-            .get()
-            .lifecycle.removeObserver(this)
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
     }
-
 
     // DefaultLifecycleObserver
 
     private fun judgeLock() {
-        if (autoLockAfterSeconds.toLong() >= 0 && timeEnteredBackground > 0 && (System.currentTimeMillis() - timeEnteredBackground) / 1000 > autoLockAfterSeconds.toLong()) {
+        if (autoLockAfterSeconds.toLong() >= 0 &&
+            timeEnteredBackground > 0 &&
+            (System.currentTimeMillis() - timeEnteredBackground) / 1000 > autoLockAfterSeconds.toLong()
+        ) {
             channel.invokeMethod("lock", null)
         }
         timeEnteredBackground = 0
     }
 
     override fun onResume(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onResume");
+        channel.invokeMethod("onLifeCycle", "onResume")
         judgeLock()
         super.onResume(owner)
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onDestroy");
+        channel.invokeMethod("onLifeCycle", "onDestroy")
         super.onDestroy(owner)
     }
 
     override fun onPause(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onPause");
+        channel.invokeMethod("onLifeCycle", "onPause")
         timeEnteredBackground = System.currentTimeMillis()
         super.onPause(owner)
     }
 
     override fun onStop(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onStop");
+        channel.invokeMethod("onLifeCycle", "onStop")
         super.onStop(owner)
     }
 
     override fun onStart(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onStart");
+        channel.invokeMethod("onLifeCycle", "onStart")
         super.onStart(owner)
     }
 
     override fun onCreate(owner: LifecycleOwner) {
-        channel.invokeMethod("onLifeCycle", "onCreate");
+        channel.invokeMethod("onLifeCycle", "onCreate")
         super.onCreate(owner)
     }
 
@@ -123,6 +104,7 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
+        this.activity = null
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
@@ -130,5 +112,6 @@ class PrivacyScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onDetachedFromActivity() {
+        this.activity = null
     }
 }

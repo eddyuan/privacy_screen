@@ -1,11 +1,11 @@
 name: privacy_screen
 description: A plugin for hiding sensitive data when app is in app switcher and in background. It also provides automatic lock triggers with native lifeCycle listeners.
-version: 0.0.6
+version: 0.0.8
 homepage: https://github.com/eddyuan/privacy_screen.git
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
-  flutter: ">=2.5.0"
+  sdk: '>=2.17.6 <4.0.0'
+  flutter: '>=2.5.0'
 
 dependencies:
   flutter:

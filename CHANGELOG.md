@@ -1,3 +1,7 @@
+## 0.0.8 - Aug 17, 2022
+
+- PR merged (not verified). Plugin is no longer maintained, use at own risk
+
 ## 0.0.6 - Aug 17, 2022
 
 - Update some documentation and method types (minor changes)

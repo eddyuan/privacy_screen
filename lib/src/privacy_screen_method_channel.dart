@@ -1,5 +1,3 @@
-import 'dart:ui' show Color;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '/src/privacy_helpers.dart';

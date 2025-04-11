@@ -1,10 +1,14 @@
+# This plugin is no longer maintained
+
+This plugin is no longer maintained. Please use at your own risk.
+
 # privacy_screen
 
 Flutter plugin to provide a privacy screen feature (hide content when app is in background)
 
-Pluggin in iOS is in swift
+Plugin in iOS is in swift
 
-Pluggin in Android is in Kotlin
+Plugin in Android is in Kotlin
 
 **This plugin used native app lifeCycles instead of flutter's to ensure it works when flutter entered a native view (eg: from a native plugin)**
 
@@ -12,12 +16,12 @@ This plugin also provides a native life cycle listener through `instance.appLife
 
 ## Features
 
-| IOS                | Android                | Feature                                 |
-| ------------------ | ---------------------- | --------------------------------------- |
-| :heavy_check_mark: | :x:                    | Custom privacy screen image / Blurr Effect             |
-| :x:                | Mandatory when enabled | Disable screenshot                      |
-| :heavy_check_mark: | :heavy_check_mark:     | Auto lock trigger with native lifecycle |
-| :heavy_check_mark: | :heavy_check_mark:     | Native lifecycle listener               |
+| IOS                | Android                | Feature                                    |
+| ------------------ | ---------------------- | ------------------------------------------ |
+| :heavy_check_mark: | :x:                    | Custom privacy screen image / Blurr Effect |
+| :x:                | Mandatory when enabled | Disable screenshot                         |
+| :heavy_check_mark: | :heavy_check_mark:     | Auto lock trigger with native lifecycle    |
+| :heavy_check_mark: | :heavy_check_mark:     | Native lifecycle listener                  |
 
 ## Cons
 
@@ -247,12 +251,12 @@ When calling `instance.enable()`, configurations can be provided:
 
 ### IOS options
 
-| param                | feature                                                                                                                                                   |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| enablePrivacy        | Enable the privacy view when app goes into background                                                                                                     |
-| autoLockAfterSeconds | Trigger lock when coming back (x) seconds after enter background. This is seperated from enablePriacy, so you can disable privacy and still use auto lock |
-| privacyImageName     | The name of the native IOS runner asset you want to show on the privacy view. Leave empty if you don't want to show an image                              |
-| lockTrigger          | What native event should trigger the lock mechanism. Try avoid using IosLockTrigger.willResignActive                                                      |
+| param                | feature                                                                                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| enablePrivacy        | Enable the privacy view when app goes into background                                                                                                      |
+| autoLockAfterSeconds | Trigger lock when coming back (x) seconds after enter background. This is separated from enablePrivacy, so you can disable privacy and still use auto lock |
+| privacyImageName     | The name of the native IOS runner asset you want to show on the privacy view. Leave empty if you don't want to show an image                               |
+| lockTrigger          | What native event should trigger the lock mechanism. Try avoid using IosLockTrigger.willResignActive                                                       |
 
 ### Android options
 
